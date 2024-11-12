@@ -1,5 +1,8 @@
+import { nanoid } from "nanoid";
 import { useState } from "react";
+
 import Task from "./Task.jsx";
+import TaskForm from "./TaskForm.jsx";
 
 function App() {
   const [tasks, setTasks] = useState([
@@ -20,6 +23,11 @@ function App() {
     },
   ]);
 
+  function addTask(text) {
+    const newTask = { id: `task-${nanoid()}`, text, isComplete: false };
+    setTasks([...tasks, newTask]);
+  }
+
   function toggleTask(id) {
     setTasks(
       tasks.map((task) => {
@@ -35,6 +43,7 @@ function App() {
   return (
     <>
       <h1>Tasks</h1>
+      <TaskForm addTask={addTask} />
       {tasks.length > 0 ? (
         <ul className="taskList">
           {tasks.map((task) => (
